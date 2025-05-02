@@ -10,7 +10,6 @@ export const getLatestRates = async (req: Request, res: Response) => {
         const response = await fetchRates({ base, symbols });
 
         res.json({
-            success: true,
             base: response.base,
             date: response.date,
             rates: response.rates,
@@ -35,7 +34,6 @@ export const getHistoricalRates = async (req: Request, res: Response) => {
         const response = await fetchRates({ base, symbols, date });
 
         res.json({
-            success: true,
             base: response.base,
             date: response.date,
             rates: response.rates,
