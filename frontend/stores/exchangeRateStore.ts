@@ -19,6 +19,9 @@ class ExchangeRateStore {
         rates: {},
     };
 
+    loading = false;
+    error: string | null = null;
+
     constructor() {
         // 생성자에서 MobX의 자동 관찰 설정(데이터가 바뀌면 컴포넌트가 리렌더링 되도록)
         makeAutoObservable(this);
@@ -31,9 +34,16 @@ class ExchangeRateStore {
 
     // 특정 날짜의 환율 정보를 요청
     async fetchExchangeRate() {
-        const response = await axios.get(`${API_URL}/api/rates/latest`);
-        // 변환된 데이터로 상태 업데이트
-        this.setExchangeRate(response.data);
+        this.loading = true;
+        this.error = null;
+        try {
+            const response = await axios.get(`${API_URL}/api/rates/latest`);
+            this.setExchangeRate(response.data);
+        } catch (e: any) {
+            this.error = e.message || "환율 정보를 불러오지 못했습니다.";
+        } finally {
+            this.loading = false;
+        }
     }
 
     // 항상 JSON 형식으로 반환

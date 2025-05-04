@@ -1,11 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
-import { observer } from "mobx-react-lite";
 import { StoresContext } from "../stores";
 import { stores } from "../stores";
 import MainPage from "./pages/MainPage";
 
-const App = observer(() => {
+const App = () => {
   return (
     <StoresContext.Provider value={stores}>
       <BrowserRouter>
@@ -15,6 +14,6 @@ const App = observer(() => {
       </BrowserRouter>
     </StoresContext.Provider>
   )
-})
+}
 
 export default App;
